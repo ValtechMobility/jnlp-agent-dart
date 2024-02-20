@@ -15,4 +15,8 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
 
 RUN apt update && apt install -y default-jre
 
+RUN useradd -ms /bin/bash jenkins
+USER jenkins
+WORKDIR /home/jenkins
+
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
