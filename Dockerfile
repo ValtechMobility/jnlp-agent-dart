@@ -12,7 +12,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
     ln -s /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-slave
 
 RUN apt-get update && \
-    apt-get install -y bash curl file git unzip xz-utils zip libglu1-mesa cmake && \
+    apt-get install -y bash curl file git unzip xz-utils zip libglu1-mesa cmake default-jre && \
     rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -r -g 1441 jenkins && useradd --no-log-init -r -u 1441 -g jenkins -m jenkins
