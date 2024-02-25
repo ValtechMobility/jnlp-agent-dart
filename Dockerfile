@@ -12,7 +12,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
     ln -s /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-slave
 
 RUN apt-get update && \
-    apt-get install -y bash curl file git unzip xz-utils zip libglu1-mesa cmake default-jre && \
+    apt-get install -y bash curl file git unzip xz-utils zip libglu1-mesa cmake openjdk-17-jre && \
     rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash jenkins
@@ -32,5 +32,13 @@ RUN flutter-sdk/bin/flutter config --no-analytics
 ENV PATH="$PATH:/home/jenkins/flutter-sdk/bin"
 ENV PATH="$PATH:/home/jenkins/flutter-sdk/bin/cache/dart-sdk/bin"
 ENV PATH="$PATH:/home/jenkins/.pub-cache/bin"
+
+RUN curl -O https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip && \
+    mkdir android && \
+    unzip commandlinetools-linux-11076708_latest.zip -d android && \
+    rm commandlinetools-linux-11076708_latest.zip
+RUN echo -n "y" | android/cmdline-tools/bin/sdkmanager --install "platform-tools" "cmdline-tools;latest" "platforms;android-34" "build-tools;34.0.0" --sdk_root=/home/jenkins/flutter-sdk/ && \
+    flutter config --android-sdk /home/jenkins/flutter-sdk && \
+    yes | flutter doctor --android-licenses
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
