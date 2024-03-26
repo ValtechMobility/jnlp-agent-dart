@@ -12,7 +12,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
     ln -s /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-slave
 
 RUN apt-get update && \
-    apt-get install -y bash curl file git unzip xz-utils zip libglu1-mesa cmake openjdk-17-jre && \
+    apt-get install -y bash curl file git unzip xz-utils zip libglu1-mesa cmake openjdk-17-jre openjdk-17-jdk && \
     rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash jenkins
@@ -40,5 +40,6 @@ RUN curl -O https://dl.google.com/android/repository/commandlinetools-linux-1107
 RUN echo -n "y" | android/cmdline-tools/bin/sdkmanager --install "platform-tools" "cmdline-tools;latest" "platforms;android-34" "build-tools;34.0.0" --sdk_root=/home/jenkins/flutter-sdk/ && \
     flutter config --android-sdk /home/jenkins/flutter-sdk && \
     yes | flutter doctor --android-licenses
+USER root
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
