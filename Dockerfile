@@ -1,6 +1,6 @@
 FROM jenkins/inbound-agent:alpine as jnlp
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ARG version
 LABEL Description="This is a base image, which allows connecting Jenkins agents via JNLP protocols" Vendor="Jenkins project" Version="$version"
