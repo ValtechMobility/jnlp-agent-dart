@@ -1,4 +1,4 @@
-FROM jenkins/inbound-agent:alpine as jnlp
+FROM jenkins/inbound-agent:alpine-jdk21 as jnlp
 
 FROM ubuntu:22.04
 
